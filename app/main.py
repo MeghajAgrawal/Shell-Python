@@ -3,12 +3,16 @@ import sys
 
 def main():
     # Uncomment this block to pass the first stage
-    sys.stdout.write("$ ")
-    sys.stdout.flush()
+    valid_commands = []
+    while True:
+        sys.stdout.write("$ ")
+        sys.stdout.flush()
 
-    # Wait for user input
-    cmd = input()
-    sys.stdout.write(f"{cmd}: command not found\n")
+        cmd = input()
+        if cmd not in valid_commands:
+            sys.stdout.write(f"{cmd}: command not found\n")
+            continue
+        
 
 
 if __name__ == "__main__":
