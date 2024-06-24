@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 def main():
     # Uncomment this block to pass the first stage
@@ -30,7 +31,19 @@ def main():
                 else:
                     sys.stdout.write(f"{args[1]}: not found\n")
             else:
-                sys.stdout.write(f"{cmd}: command not found\n")
+                process_path = None
+                paths = PATH.split(":")
+                for path in paths:
+                    file_path = os.path.join(path,args[0])
+                    if os.path.isfile(file_path) and os.access(file_path,os.X_OK):
+                        process_path = file_path
+                if process_path:
+                    try:
+                        subprocess.run(args)
+                    except subprocess.CalledProcessError as e:
+                        sys.stderr.write(f"{cmd}: {e}\n")
+                else:
+                    sys.stdout.write(f"{cmd}: command not found\n")
         continue
 
 if __name__ == "__main__":
