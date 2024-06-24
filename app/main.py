@@ -4,7 +4,7 @@ import subprocess
 
 def main():
     # Uncomment this block to pass the first stage
-    valid_commands = ['echo', 'exit', 'type']
+    valid_commands = ['echo', 'exit', 'type', 'pwd']
     PATH = os.environ.get('PATH')
     
     while True:
@@ -30,6 +30,8 @@ def main():
                     sys.stdout.write(f"{args[1]} is {cmd_path}\n")
                 else:
                     sys.stdout.write(f"{args[1]}: not found\n")
+            elif args[0] == 'pwd':
+                sys.stdout.write(f"{os.getcwd()}\n")
             else:
                 process_path = None
                 paths = PATH.split(":")
