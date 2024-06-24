@@ -4,7 +4,7 @@ import subprocess
 
 def main():
     # Uncomment this block to pass the first stage
-    valid_commands = ['echo', 'exit', 'type', 'pwd']
+    valid_commands = ['echo', 'exit', 'type', 'pwd', 'cd']
     PATH = os.environ.get('PATH')
     
     while True:
@@ -32,6 +32,11 @@ def main():
                     sys.stdout.write(f"{args[1]}: not found\n")
             elif args[0] == 'pwd':
                 sys.stdout.write(f"{os.getcwd()}\n")
+            elif args[0] == 'cd':
+                try:
+                    os.chdir(" ".join(args[1:]))
+                except FileNotFoundError:
+                    sys.stdout.write(f"{args[0]}: {" ".join(args[1:])}: No such file or directory\n")
             else:
                 process_path = None
                 paths = PATH.split(":")
